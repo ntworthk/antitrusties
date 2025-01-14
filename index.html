@@ -7,136 +7,43 @@
     
     <!-- External Dependencies -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.10.17/interact.min.js"></script>
     
     <!-- Application Styles -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/components.css">
-    <link rel="stylesheet" href="styles/modals.css">
+    <link rel="stylesheet" href="styles/wager.css">
 </head>
 <body>
     <div class="container">
         <header class="header">
             <h1>HoustonKemp antitrusties 2025</h1>
-            <p class="header-description">Play along as we make our predictions for the world of competition economics in Australia (and beyond) in 2025</p>
+            <p class="header-description">Track your predictions and points for competition economics in 2025</p>
         </header>
 
-        <!-- Assigned Picks Section -->
         <section class="section" id="assigned-section">
             <div class="section-header">
                 <h2>Assigned Picks</h2>
-                <button class="add-button" data-modal-target="person-modal">
-                    <i class="fas fa-plus"></i>
-                </button>
             </div>
             <div class="persons-grid">
                 <!-- Person containers will be added here dynamically -->
             </div>
         </section>
-
-        <!-- Available Picks Section -->
-        <section class="section" id="available-section">
-            <div class="section-header">
-                <h2>Available Picks</h2>
-                <button class="add-button" data-modal-target="prediction-modal">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-            <div class="dropzone" id="available-picks">
-                <!-- Available predictions will be added here dynamically -->
-            </div>
-        </section>
     </div>
-
-    <!-- Add Person Modal -->
-    <div class="modal" id="person-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add Person</h3>
-                <button class="close-button">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <input type="text" id="person-name-input" placeholder="Enter name">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="button primary-button" id="add-person-button">Add</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Prediction Modal -->
-    <div class="modal" id="prediction-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add Prediction</h3>
-                <button class="close-button">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <input type="text" id="prediction-text-input" placeholder="Enter prediction">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="button primary-button" id="add-prediction-button">Add</button>
-            </div>
-        </div>
-    </div>
-    <div id="adminPanel" class="admin-panel">
-        <div class="admin-controls">
-            <button id="syncButton" class="btn btn-small admin-sync hidden" title="Sync changes">
-                <i class="fas fa-sync-alt"></i>
-            </button>
-            <button id="showAdminLogin" class="btn btn-small">
-                <i class="fas fa-lock"></i>
-            </button>
-        </div>
-        <div id="adminLogin" class="admin-login hidden">
-            <div class="admin-login-content">
-                <h3>Admin Login</h3>
-                <input type="password" 
-                       id="githubToken" 
-                       placeholder="Enter GitHub Token"
-                       class="admin-input">
-                <div class="admin-buttons">
-                    <button id="loginButton" class="btn">Login</button>
-                    <button id="cancelLogin" class="btn btn-secondary">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Templates -->
-    <template id="person-template">
-        <div class="person-container">
-            <div class="person-header">
-                <h3 class="person-name"></h3>
-            </div>
-            <div class="dropzone person-predictions"></div>
-        </div>
-    </template>
-
-    <template id="prediction-template">
-        <div class="prediction-card">
-            <div class="status-indicator"></div>
-            <div class="prediction-content">
-                <p class="prediction-text"></p>
-                <input type="text" class="notes-input" placeholder="Add notes...">
-            </div>
-        </div>
-    </template>
 
     <!-- Application Scripts -->
-    <script src="js/state.js"></script>
-    <script src="js/drag-drop.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/modals.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="js/wager-state.js"></script>
+    <script src="js/wager-ui.js"></script>
+    <script>
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await WagerState.initialize();
+            WagerUI.initialize();
+
+            // Set up data change handler
+            WagerState.onDataChange = () => {
+                WagerUI.render();
+            };
+        });
+    </script>
 </body>
 </html>
