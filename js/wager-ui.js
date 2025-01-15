@@ -2,8 +2,18 @@
 const WagerUI = {
     initialize() {
         this.container = document.querySelector('.container');
+        this.collapseStates = this.loadCollapseStates();
         this.setupUI();
         this.render();
+    },
+
+    loadCollapseStates() {
+        const stored = localStorage.getItem('personCollapseStates');
+        return stored ? JSON.parse(stored) : {};
+    },
+
+    saveCollapseStates() {
+        localStorage.setItem('personCollapseStates', JSON.stringify(this.collapseStates));
     },
 
     setupUI() {
@@ -38,7 +48,7 @@ const WagerUI = {
 
     createPersonContainer(person) {
         const totalScore = WagerState.calculateTotalScore(person);
-        const isCollapsed = localStorage.getItem(`collapsed_${person.name}`) === 'true';
+        const isCollapsed = this.collapseStates[person.name] || false;
         
         const container = document.createElement('div');
         container.className = 'person-container';
@@ -83,7 +93,8 @@ const WagerUI = {
             container.classList.toggle('collapsed');
             
             // Store state in localStorage
-            localStorage.setItem(`collapsed_${person.name}`, !isCurrentlyCollapsed);
+            this.collapseStates[person.name] = !isCurrentlyCollapsed;
+            this.saveCollapseStates();
             
             // Rotate chevron
             const chevron = header.querySelector('.toggle-icon');
