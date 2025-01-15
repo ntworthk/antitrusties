@@ -70,7 +70,14 @@ const WagerUI = {
 
     render() {
         this.personsGrid.innerHTML = '';
-        WagerState.picks.forEach(person => {
+        // Sort people by score in descending order
+        const sortedPeople = [...WagerState.picks].sort((a, b) => {
+            const scoreA = WagerState.calculateTotalScore(a);
+            const scoreB = WagerState.calculateTotalScore(b);
+            return scoreB - scoreA;
+        });
+        // Render
+        sortedPeople.forEach(person => {
             const personContainer = this.createPersonContainer(person);
             this.personsGrid.appendChild(personContainer);
         });
