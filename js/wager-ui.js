@@ -61,9 +61,12 @@ const WagerUI = {
             <div class="person-predictions ${isCollapsed ? 'collapsed' : ''}">
                 ${person.picks.map(pick => {
                     const prediction = WagerState.getPredictionById(pick.id);
+                    const statusText = prediction?.status === 'correct' ? 'Correct prediction' :
+                    prediction?.status === 'incorrect' ? 'Incorrect prediction' :
+                    'Pending prediction';
                     return `
                         <div class="prediction-card">
-                            <div class="status-indicator">
+                            <div class="status-indicator" title = "${statusText}">
                                 ${this.getStatusIcon(prediction?.status || 'pending')}
                             </div>
                             <div class="prediction-content">
