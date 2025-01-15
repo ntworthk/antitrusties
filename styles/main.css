@@ -1,4 +1,4 @@
-/* Base styles and layout */
+/* Base styles and variables */
 :root {
     --primary: #1a365d;
     --secondary: #2c5282;
@@ -6,11 +6,13 @@
     --surface: #ffffff;
     --border: #e2e8f0;
     --text: #2d3748;
-    --success: #48bb78;
-    --error: #f56565;
+    --success: #28a745;
+    --error: #dc3545;
+    --warning: #ffc107;
     --shadow: rgba(0, 0, 0, 0.1);
 }
 
+/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -25,12 +27,14 @@ body {
     min-height: 100vh;
 }
 
+/* Layout */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
 }
 
+/* Header */
 .header {
     text-align: center;
     margin-bottom: 2rem;
@@ -49,6 +53,7 @@ body {
     font-size: 1rem;
 }
 
+/* Section */
 .section {
     background: var(--surface);
     border-radius: 0.5rem;
@@ -71,6 +76,7 @@ body {
     font-weight: 600;
 }
 
+/* Grid Layout */
 .persons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
@@ -78,6 +84,98 @@ body {
     padding: 1rem;
 }
 
+/* Person Container */
+.person-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.person-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+}
+
+.person-name {
+    color: var(--primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.score {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--text);
+}
+
+/* Prediction Cards */
+.person-predictions {
+    padding: 1rem;
+}
+
+.prediction-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    box-shadow: 0 1px 2px var(--shadow);
+}
+
+.prediction-card:last-child {
+    margin-bottom: 0;
+}
+
+.status-indicator {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prediction-content {
+    flex-grow: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
+}
+
+.prediction-text {
+    margin: 0;
+    word-break: break-word;
+}
+
+.prediction-notes {
+    font-size: 0.875em;
+    color: var(--secondary);
+    margin-top: 0.5em;
+}
+
+.points-badge {
+    background-color: var(--background);
+    padding: 0.25em 0.5em;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    font-weight: 600;
+    margin-left: auto;
+    color: var(--text);
+}
+
+/* Status Colors */
+.text-success { color: var(--success); }
+.text-danger { color: var(--error); }
+.text-warning { color: var(--warning); }
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -86,83 +184,8 @@ body {
     .persons-grid {
         grid-template-columns: 1fr;
     }
-}
 
-#available-section {
-    position: relative;
-    z-index: 1;
-}
-
-#assigned-section {
-    position: relative;
-    z-index: 1;
-}
-
-.admin-panel {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.admin-controls {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-}
-
-.admin-sync {
-    opacity: 0.5;
-}
-
-.admin-sync.has-changes {
-    opacity: 1;
-}
-
-.admin-sync.syncing i {
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-.admin-login {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-}
-
-.admin-login.hidden {
-    display: none;
-}
-
-.admin-login-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.admin-input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 100%;
-}
-
-.admin-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.btn-secondary {
-    background-color: #6c757d;
-}
-
-.hidden {
-    display: none !important;
+    .header h1 {
+        font-size: 1.75rem;
+    }
 }
