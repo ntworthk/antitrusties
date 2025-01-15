@@ -1,4 +1,3 @@
-// UI management for wager system
 const WagerUI = {
     initialize() {
         this.container = document.querySelector('.container');
@@ -17,7 +16,6 @@ const WagerUI = {
     },
 
     setupUI() {
-        // Clear existing content
         this.container.innerHTML = `
             <header class="header">
                 <h1>HoustonKemp antitrusties 2025</h1>
@@ -71,7 +69,10 @@ const WagerUI = {
                             <div class="prediction-content">
                                 <p class="prediction-text">${prediction?.text || 'Loading...'}</p>
                                 ${prediction?.notes ? `<p class="prediction-notes">${prediction.notes}</p>` : ''}
-                                <span class="points-badge">${pick.points} pts</span>
+                                <div class="prediction-badges">
+                                    ${pick.risky ? '<span class="risky-badge"><i class="fas fa-bolt"></i> Risky</span>' : ''}
+                                    <span class="points-badge">${pick.points} pts</span>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -86,22 +87,18 @@ const WagerUI = {
         const header = container.querySelector('.person-header');
         const predictionsDiv = container.querySelector('.person-predictions');
         
-        // Add click handler
         header.addEventListener('click', () => {
             const isCurrentlyCollapsed = predictionsDiv.classList.contains('collapsed');
             predictionsDiv.classList.toggle('collapsed');
             container.classList.toggle('collapsed');
             
-            // Store state in localStorage
             this.collapseStates[person.name] = !isCurrentlyCollapsed;
             this.saveCollapseStates();
             
-            // Rotate chevron
             const chevron = header.querySelector('.toggle-icon');
             chevron.style.transform = isCurrentlyCollapsed ? 'rotate(0deg)' : 'rotate(180deg)';
         });
         
-        // Add keyboard handler for accessibility
         header.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -114,7 +111,6 @@ const WagerUI = {
 
     render() {
         this.personsGrid.innerHTML = '';
-        // Sort people by score in descending order
         const sortedPeople = [...WagerState.picks].sort((a, b) => {
             const scoreA = WagerState.calculateTotalScore(a);
             const scoreB = WagerState.calculateTotalScore(b);

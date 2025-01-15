@@ -63,9 +63,19 @@ const WagerState = {
         return this.predictions.find(p => p.id === id);
     },
 
-    calculateScore(prediction, points) {
-        if (prediction?.status === 'correct') {
-            return points;
+    calculateScore(prediction, pick) {
+        if (!prediction) return 0;
+        
+        if (pick.risky) {
+            if (prediction.status === 'correct') {
+                return pick.points * 2;
+            } else if (prediction.status === 'incorrect') {
+                return -pick.points;
+            }
+        } else {
+            if (prediction.status === 'correct') {
+                return pick.points;
+            }
         }
         return 0;
     },
@@ -73,7 +83,7 @@ const WagerState = {
     calculateTotalScore(personPicks) {
         return personPicks.picks.reduce((total, pick) => {
             const prediction = this.getPredictionById(pick.id);
-            return total + this.calculateScore(prediction, pick.points);
+            return total + this.calculateScore(prediction, pick);
         }, 0);
     }
 };
