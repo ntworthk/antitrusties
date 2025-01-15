@@ -66,14 +66,14 @@ const WagerUI = {
                     'Pending prediction';
                     return `
                         <div class="prediction-card">
-                            <div class="status-indicator" title = "${statusText}">
+                            <div class="status-indicator" title="${statusText}">
                                 ${this.getStatusIcon(prediction?.status || 'pending')}
                             </div>
                             <div class="prediction-content">
                                 <p class="prediction-text">${prediction?.text || 'Loading...'}</p>
                                 ${prediction?.notes ? `<p class="prediction-notes">${prediction.notes}</p>` : ''}
                                 <div class="prediction-badges">
-                                    ${pick.risky ? '<span class="risky-badge"><i class="fas fa-bolt"></i> Risky</span>' : ''}
+                                    ${pick.risky ? '<span class="risky-badge" title="Prediction is Risky - worth double or negative"><i class="fas fa-bolt"></i> Risky</span>' : ''}
                                     <span class="points-badge">${pick.points} pts</span>
                                 </div>
                             </div>
