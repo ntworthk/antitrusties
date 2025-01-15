@@ -25,7 +25,7 @@ const WagerUI = {
             </header>
             <section class="section" id="assigned-section">
                 <div class="section-header">
-                    <h2>Assigned Picks</h2>
+                    <h2>Scores</h2>
                 </div>
                 <div class="persons-grid">
                     <!-- Person containers will be added here dynamically -->
