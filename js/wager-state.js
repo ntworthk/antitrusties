@@ -1,10 +1,6 @@
-// State management for wager system
 const WagerState = {
     picks: [],
     predictions: [],
-    owner: 'ntworthk',
-    repo: 'antitrusties-data',
-    dataPath: 'data/predictions.json',
 
     async initialize() {
         await Promise.all([
@@ -34,10 +30,7 @@ const WagerState = {
 
     async loadPredictions() {
         try {
-            const timestamp = new Date().getTime();
-            const response = await fetch(
-                `https://raw.githubusercontent.com/${this.owner}/${this.repo}/main/${this.dataPath}?_=${timestamp}`
-            );
+            const response = await fetch('https://cardioid.co.nz/api/predictions');
             if (!response.ok) throw new Error('Failed to fetch predictions');
             
             const data = await response.json();
