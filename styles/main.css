@@ -99,6 +99,21 @@ body {
     padding: 0.75rem 1rem;
     background: var(--background);
     border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.person-header:hover {
+    background-color: var(--border);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    margin-right: 1rem;
 }
 
 .person-name {
@@ -114,9 +129,28 @@ body {
     color: var(--text);
 }
 
+/* Toggle icon */
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.person-container.collapsed .toggle-icon {
+    transform: rotate(180deg);
+}
+
 /* Prediction Cards */
 .person-predictions {
     padding: 1rem;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+    max-height: 1000px;
+    opacity: 1;
+    overflow: hidden;
+}
+
+.person-predictions.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
 }
 
 .prediction-card {

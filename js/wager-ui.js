@@ -38,15 +38,19 @@ const WagerUI = {
 
     createPersonContainer(person) {
         const totalScore = WagerState.calculateTotalScore(person);
+        const isCollapsed = localStorage.getItem(`collapsed_${person.name}`) === 'true';
         
         const container = document.createElement('div');
         container.className = 'person-container';
         container.innerHTML = `
-            <div class="person-header">
-                <h3 class="person-name">${person.name}</h3>
-                <span class="score">Score: ${totalScore}</span>
+            <div class="person-header" role="button" tabindex="0">
+                <div class="header-content">
+                    <h3 class="person-name">${person.name}</h3>
+                    <span class="score">Score: ${totalScore}</span>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
             </div>
-            <div class="person-predictions">
+            <div class="person-predictions ${isCollapsed ? 'collapsed' : ''}">
                 ${person.picks.map(pick => {
                     const prediction = WagerState.getPredictionById(pick.id);
                     return `
@@ -64,6 +68,35 @@ const WagerUI = {
                 }).join('')}
             </div>
         `;
+
+        if (isCollapsed) {
+            container.classList.add('collapsed');
+        }
+        
+        const header = container.querySelector('.person-header');
+        const predictionsDiv = container.querySelector('.person-predictions');
+        
+        // Add click handler
+        header.addEventListener('click', () => {
+            const isCurrentlyCollapsed = predictionsDiv.classList.contains('collapsed');
+            predictionsDiv.classList.toggle('collapsed');
+            container.classList.toggle('collapsed');
+            
+            // Store state in localStorage
+            localStorage.setItem(`collapsed_${person.name}`, !isCurrentlyCollapsed);
+            
+            // Rotate chevron
+            const chevron = header.querySelector('.toggle-icon');
+            chevron.style.transform = isCurrentlyCollapsed ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+        
+        // Add keyboard handler for accessibility
+        header.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                header.click();
+            }
+        });
         
         return container;
     },
@@ -76,7 +109,7 @@ const WagerUI = {
             const scoreB = WagerState.calculateTotalScore(b);
             return scoreB - scoreA;
         });
-        // Render
+        
         sortedPeople.forEach(person => {
             const personContainer = this.createPersonContainer(person);
             this.personsGrid.appendChild(personContainer);
