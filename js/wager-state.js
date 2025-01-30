@@ -1,11 +1,13 @@
 const WagerState = {
     picks: [],
     predictions: [],
+    unpickedPredictions: [],
 
     async initialize() {
         await Promise.all([
             this.loadPicks(),
-            this.loadPredictions()
+            this.loadPredictions(),
+            this.loadUnpickedPredictions()
         ]);
         
         if (this.onDataChange) {
@@ -39,6 +41,21 @@ const WagerState = {
         } catch (error) {
             console.error('Error loading predictions:', error);
             this.predictions = [];
+            return false;
+        }
+    },
+
+    async loadUnpickedPredictions() {
+        try {
+            const response = await fetch('https://cardioid.co.nz/api/unpicked');
+            if (!response.ok) throw new Error('Failed to fetch unpicked predictions');
+            
+            const data = await response.json();
+            this.unpickedPredictions = data.picks || [];
+            return true;
+        } catch (error) {
+            console.error('Error loading unpicked predictions:', error);
+            this.unpickedPredictions = [];
             return false;
         }
     },

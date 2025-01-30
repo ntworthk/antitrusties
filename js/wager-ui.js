@@ -29,9 +29,18 @@ const WagerUI = {
                     <!-- Person containers will be added here dynamically -->
                 </div>
             </section>
+            <section class="section" id="unpicked-section">
+                <div class="section-header">
+                    <h2>Unpicked predictions</h2>
+                </div>
+                <div class="unpicked-predictions">
+                    <!-- Unpicked predictions will be added here dynamically -->
+                </div>
+            </section>
         `;
 
         this.personsGrid = document.querySelector('.persons-grid');
+        this.unpickedGrid = document.querySelector('.unpicked-predictions');
     },
 
     getStatusIcon(status) {
@@ -112,6 +121,21 @@ const WagerUI = {
         return container;
     },
 
+    createUnpickedPredictionCard(prediction) {
+        const card = document.createElement('div');
+        card.className = 'prediction-card';
+        card.innerHTML = `
+            <div class="status-indicator" title="Pending prediction">
+                ${this.getStatusIcon('pending')}
+            </div>
+            <div class="prediction-content">
+                <p class="prediction-text">${prediction.text || 'Loading...'}</p>
+                ${prediction.notes ? `<p class="prediction-notes">${prediction.notes}</p>` : ''}
+            </div>
+        `;
+        return card;
+    },
+
     render() {
         this.personsGrid.innerHTML = '';
         const sortedPeople = [...WagerState.picks].sort((a, b) => {
@@ -123,6 +147,15 @@ const WagerUI = {
         sortedPeople.forEach(person => {
             const personContainer = this.createPersonContainer(person);
             this.personsGrid.appendChild(personContainer);
+        });
+
+        this.unpickedGrid.innerHTML = '';
+        WagerState.unpickedPredictions.forEach(prediction => {
+            const fullPrediction = WagerState.getPredictionById(prediction.id);
+            if (fullPrediction) {
+                const card = this.createUnpickedPredictionCard(fullPrediction);
+                this.unpickedGrid.appendChild(card);
+                }
         });
     }
 };
