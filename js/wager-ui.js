@@ -3,6 +3,7 @@ const WagerUI = {
         this.container = document.querySelector('.container');
         this.collapseStates = this.loadCollapseStates();
         this.setupUI();
+        this.attachEventListeners();
         this.render();
     },
 
