@@ -273,3 +273,43 @@ body {
         font-size: 1.75rem;
     }
 }
+
+.rules-section {
+    margin-bottom: 20px;
+    background: var(--surface);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rules-toggle {
+    width: 100%;
+    text-align: left;
+    padding: 12px;
+    background: var(--surface);
+    color: var(--primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+.rules-toggle:hover {
+    background: var(--background);
+}
+
+.rules-content {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.rules-content p {
+    margin-bottom: 1rem;
+}
+
+.rules-content p:last-child {
+    margin-bottom: 0;
+}
+
+.rules-content.hidden {
+    display: none;
+}
