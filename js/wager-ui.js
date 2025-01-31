@@ -19,8 +19,17 @@ const WagerUI = {
         this.container.innerHTML = `
             <header class="header">
                 <h1>HoustonKemp antitrusties 2025</h1>
-                <p class="header-description">Track your predictions and points for competition economics in 2025</p>
+                <p class="header-description">Track our predictions and points for competition economics in 2025</p>
             </header>
+            <div class="rules-section">
+                <button class="rules-toggle btn">Show rules</button>
+                <div class="rules-content hidden">
+                    <p>Players had ten points to wager on what they thought will happen in the field of competition economics in Australia (any beyond) in 2025 (these are called their 'picks').</p>
+                    <p>They could wager up to three points per prediction from a predetermined list.</p>
+                    <p>When we score the results at the end of 2025, they will receive points equal to their wager for correct picks, ie, predictions that come true in 2025. No points are lost for incorrect picks.</p>
+                    <p>However, players could designate one of their picks to be 'Risky'. A correct 'Risky' pick scores double if correct, but loses the wagered points if incorrect.</p>
+                </div>
+            </div>
             <section class="section" id="assigned-section">
                 <div class="section-header">
                     <h2>Scores</h2>
